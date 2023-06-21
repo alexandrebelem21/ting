@@ -15,6 +15,9 @@ class Queue(AbstractQueue):
         if not self.is_empty():
             return self.items.pop(0)
 
+    def is_empty(self):
+        return len(self.items) == 0
+
     def search(self, index):
         if index < 0 or index >= len(self.items):
             raise IndexError("Índice Inválido ou Inexistente")
