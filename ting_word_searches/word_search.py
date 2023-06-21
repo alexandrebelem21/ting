@@ -1,26 +1,22 @@
 def exists_word(word, instance):
-    my_occurrences = []
-    my_word = word.lower()
-    index = 0
+    result = []
 
-    for element in instance.queue:
-        for line in element["linhas_do_arquivo"]:
-            if my_word in line.lower():
-                index += 1
-                my_occurrences.append({"linha": index})
-            else:
-                index += 1
+    for i in range(len(instance)):
+        file = instance.search(i)
+        file_name = file["nome_do_arquivo"]
 
-    if len(my_occurrences) == 0:
-        return []
-
-    return [
-        {
-            "palavra": my_word,
-            "arquivo": element["nome_do_arquivo"],
-            "ocorrencias": my_occurrences,
+        arq = {
+            'palavra': word,
+            'arquivo': file_name,
+            'ocorrencias': []
         }
-    ]
+        for line_index, line in enumerate(file['linhas_do_arquivo'], start=1):
+            if word.lower() in line.lower():
+                arq['ocorrencias'].append({'linha': line_index})
+        if arq["ocorrencias"]:
+            result.append(arq)
+
+    return result
 
 
 def search_by_word(word, instance):
